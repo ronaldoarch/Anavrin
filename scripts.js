@@ -32,4 +32,16 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
       menu.classList.remove('open');
     }
   });
+});
+
+// Redirecionamento para WhatsApp ao clicar na imagem da massagista
+const numeroWhatsApp = '5511999999999';
+document.querySelectorAll('.card-terapeuta img').forEach(img => {
+  img.style.cursor = 'pointer';
+  img.addEventListener('click', function() {
+    const nome = this.alt;
+    const mensagem = encodeURIComponent(`Olá, gostaria de agendar uma massagem com a ${nome}`);
+    const url = `https://wa.me/${numeroWhatsApp}?text=${mensagem}`;
+    window.open(url, '_blank');
+  });
 }); 
