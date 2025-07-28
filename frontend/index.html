@@ -13,9 +13,8 @@
     <header class="navbar">
         <div class="navbar-container">
             <div class="logo">
-                <!-- Substitua o src abaixo pelo logo real -->
-                <img src="assets/logo-moema.svg" alt="Anavrin">
-            
+                <img src="assets/logo-moema.svg" alt="Anavrim">
+                Anavrim
             </div>
             <nav>
                 <ul class="menu">
@@ -91,15 +90,17 @@
     </footer>
     <!-- WhatsApp Flutuante -->
     <a href="https://wa.me/5511999999999" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Fale conosco no WhatsApp">
-        <!-- Substitua o src abaixo pelo ícone real do WhatsApp -->
         <img src="assets/whatsapp.svg" alt="WhatsApp">
     </a>
     
     <script src="scripts.js"></script>
     <script>
+    // Configuração da API - mude aqui para produção
+    const API_URL = 'http://localhost:3000/api';
+    
     async function carregarMeninas() {
       try {
-        const res = await fetch('http://localhost:3000/api/meninas');
+        const res = await fetch(`${API_URL}/meninas`);
         const meninas = await res.json();
         const container = document.getElementById('cards-meninas');
         container.innerHTML = '';
@@ -119,7 +120,6 @@
       }
     }
     
-    // Carregar meninas quando a página carregar
     document.addEventListener('DOMContentLoaded', carregarMeninas);
     </script>
 </body>
