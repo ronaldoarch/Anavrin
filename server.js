@@ -11,6 +11,9 @@ app.use(cors());
 app.use(express.json());
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
+// Servir arquivos estáticos
+app.use(express.static(__dirname));
+
 const DATA_FILE = path.join(__dirname, 'data', 'meninas.json');
 const ASSETS_DIR = path.join(__dirname, 'assets');
 
@@ -33,6 +36,15 @@ function getMeninas() {
 function saveMeninas(meninas) {
   fs.writeFileSync(DATA_FILE, JSON.stringify(meninas, null, 2));
 }
+
+// Rotas para páginas principais
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.get('/admin', (req, res) => {
+  res.sendFile(path.join(__dirname, 'admin.html'));
+});
 
 // Rota para listar meninas (ordenadas por nome)
 app.get('/api/meninas', (req, res) => {
