@@ -1,0 +1,92 @@
+[
+  {
+    "id": "1",
+    "nome": "antonella",
+    "foto": "/assets/antonella.jpeg",
+    "descricao": "Descrição da Antonella aqui."
+  },
+  {
+    "id": "2",
+    "nome": "bianca",
+    "foto": "/assets/bianca.jpg",
+    "descricao": "Descrição da Bianca aqui."
+  },
+  {
+    "id": "3",
+    "nome": "bruna",
+    "foto": "/assets/bruna.jpg",
+    "descricao": "Descrição da Bruna aqui."
+  },
+  {
+    "id": "4",
+    "nome": "camila",
+    "foto": "/assets/camila.jpg",
+    "descricao": "Descrição da Camila aqui."
+  },
+  {
+    "id": "5",
+    "nome": "dany",
+    "foto": "/assets/dany.jpg",
+    "descricao": "Descrição da Dany aqui."
+  },
+  {
+    "id": "6",
+    "nome": "duda",
+    "foto": "/assets/duda.jpg",
+    "descricao": "Descrição da Duda aqui."
+  },
+  {
+    "id": "7",
+    "nome": "isis",
+    "foto": "/assets/isis.jpg",
+    "descricao": "Descrição da Isis aqui."
+  },
+  {
+    "id": "8",
+    "nome": "jade",
+    "foto": "/assets/jade.jpg",
+    "descricao": "Descrição da Jade aqui."
+  },
+  {
+    "id": "9",
+    "nome": "larrissa",
+    "foto": "/assets/larrissa.jpg",
+    "descricao": "Descrição da Larrissa aqui."
+  },
+  {
+    "id": "10",
+    "nome": "mia",
+    "foto": "/assets/mia.jpg",
+    "descricao": "Descrição da Mia aqui."
+  },
+  {
+    "id": "11",
+    "nome": "monique",
+    "foto": "/assets/monique.jpg",
+    "descricao": "Descrição da Monique aqui."
+  },
+  {
+    "id": "12",
+    "nome": "paty",
+    "foto": "/assets/paty.jpg",
+    "descricao": "Descrição da Paty aqui."
+  },
+  {
+    "id": "13",
+    "nome": "rafa",
+    "foto": "/assets/rafa.jpg",
+    "descricao": "Descrição da Rafa aqui."
+  },
+  {
+    "id": "14",
+    "nome": "sasha",
+    "foto": "/assets/sasha.jpg",
+    "descricao": "Descrição da Sasha aqui."
+  },
+  {
+    "id": "15",
+    "nome": "thais",
+    "foto": "/assets/thais.jpg",
+    "descricao": "Descrição da Thais aqui."
+  }
+]

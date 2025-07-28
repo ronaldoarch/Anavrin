@@ -77,93 +77,7 @@
     <!-- Terapeutas Section -->
     <section class="terapeutas" id="terapeutas">
         <h2 class="terapeutas-title">Conheça as terapeutas da nossa clínica de massagem em São Paulo</h2>
-        <div class="cards-terapeutas">
-            <div class="card-terapeuta">
-                <img src="assets/antonella.jpg" alt="Antonella" style="border-radius:12px; margin-bottom:12px;">
-                <div class="card-terapeuta-title">Antonella</div>
-                <div class="card-terapeuta-desc">Descrição da Antonella aqui.</div>
-            </div>
-            <div class="card-terapeuta">
-                <img src="assets/bianca.jpg" alt="Bianca" style="border-radius:12px; margin-bottom:12px;">
-                <div class="card-terapeuta-title">Bianca</div>
-                <div class="card-terapeuta-desc">Descrição da Bianca aqui.</div>
-            </div>
-            <div class="card-terapeuta">
-                <img src="assets/bruna.jpg" alt="Bruna" style="border-radius:12px; margin-bottom:12px;">
-                <div class="card-terapeuta-title">Bruna</div>
-                <div class="card-terapeuta-desc">Descrição da Bruna aqui.</div>
-            </div>
-            <div class="card-terapeuta">
-                <img src="assets/camila.jpg" alt="Camila" style="border-radius:12px; margin-bottom:12px;">
-                <div class="card-terapeuta-title">Camila</div>
-                <div class="card-terapeuta-desc">Descrição da Camila aqui.</div>
-            </div>
-            <div class="card-terapeuta">
-                <img src="assets/dany.jpg" alt="Dany" style="border-radius:12px; margin-bottom:12px;">
-                <div class="card-terapeuta-title">Dany</div>
-                <div class="card-terapeuta-desc">Descrição da Dany aqui.</div>
-            </div>
-            <div class="card-terapeuta">
-                <img src="assets/duda.jpg" alt="Duda" style="border-radius:12px; margin-bottom:12px;">
-                <div class="card-terapeuta-title">Duda</div>
-                <div class="card-terapeuta-desc">Descrição da Duda aqui.</div>
-            </div>
-            <div class="card-terapeuta">
-                <img src="assets/isis.jpg" alt="Ísis" style="border-radius:12px; margin-bottom:12px;">
-                <div class="card-terapeuta-title">Ísis</div>
-                <div class="card-terapeuta-desc">Descrição da Ísis aqui.</div>
-            </div>
-            <div class="card-terapeuta">
-                <img src="assets/jade.jpg" alt="Jade" style="border-radius:12px; margin-bottom:12px;">
-                <div class="card-terapeuta-title">Jade</div>
-                <div class="card-terapeuta-desc">Descrição da Jade aqui.</div>
-            </div>
-            <div class="card-terapeuta">
-                <img src="assets/larissa.jpg" alt="Larissa" style="border-radius:12px; margin-bottom:12px;">
-                <div class="card-terapeuta-title">Larissa</div>
-                <div class="card-terapeuta-desc">Descrição da Larissa aqui.</div>
-            </div>
-            <div class="card-terapeuta">
-                <img src="assets/leticia.jpg" alt="Letícia" style="border-radius:12px; margin-bottom:12px;">
-                <div class="card-terapeuta-title">Letícia</div>
-                <div class="card-terapeuta-desc">Descrição da Letícia aqui.</div>
-            </div>
-            <div class="card-terapeuta">
-                <img src="assets/livia.jpg" alt="Lívia" style="border-radius:12px; margin-bottom:12px;">
-                <div class="card-terapeuta-title">Lívia</div>
-                <div class="card-terapeuta-desc">Descrição da Lívia aqui.</div>
-            </div>
-            <div class="card-terapeuta">
-                <img src="assets/mia.jpg" alt="Mia" style="border-radius:12px; margin-bottom:12px;">
-                <div class="card-terapeuta-title">Mia</div>
-                <div class="card-terapeuta-desc">Descrição da Mia aqui.</div>
-            </div>
-            <div class="card-terapeuta">
-                <img src="assets/monique.jpg" alt="Monique" style="border-radius:12px; margin-bottom:12px;">
-                <div class="card-terapeuta-title">Monique</div>
-                <div class="card-terapeuta-desc">Descrição da Monique aqui.</div>
-            </div>
-            <div class="card-terapeuta">
-                <img src="assets/paty.jpg" alt="Paty" style="border-radius:12px; margin-bottom:12px;">
-                <div class="card-terapeuta-title">Paty</div>
-                <div class="card-terapeuta-desc">Descrição da Paty aqui.</div>
-            </div>
-            <div class="card-terapeuta">
-                <img src="assets/rafa.jpg" alt="Rafa" style="border-radius:12px; margin-bottom:12px;">
-                <div class="card-terapeuta-title">Rafa</div>
-                <div class="card-terapeuta-desc">Descrição da Rafa aqui.</div>
-            </div>
-            <div class="card-terapeuta">
-                <img src="assets/sasha.jpg" alt="Sasha" style="border-radius:12px; margin-bottom:12px;">
-                <div class="card-terapeuta-title">Sasha</div>
-                <div class="card-terapeuta-desc">Descrição da Sasha aqui.</div>
-            </div>
-            <div class="card-terapeuta">
-                <img src="assets/thais.jpg" alt="Thais" style="border-radius:12px; margin-bottom:12px;">
-                <div class="card-terapeuta-title">Thais</div>
-                <div class="card-terapeuta-desc">Descrição da Thais aqui.</div>
-            </div>
-        </div>
+        <div id="cards-meninas" style="display: flex; flex-wrap: wrap; gap: 2em; justify-content: center;"></div>
     </section>
     <!-- Massagens Section -->
     <section class="massagens" id="massagens">
@@ -179,6 +93,33 @@
         <!-- Substitua o src abaixo pelo ícone real do WhatsApp -->
         <img src="assets/whatsapp.svg" alt="WhatsApp">
     </a>
+    
     <script src="scripts.js"></script>
+    <script>
+    async function carregarMeninas() {
+      try {
+        const res = await fetch('http://localhost:3000/api/meninas');
+        const meninas = await res.json();
+        const container = document.getElementById('cards-meninas');
+        container.innerHTML = '';
+        meninas.forEach(menina => {
+          container.innerHTML += `
+            <div class="card-menina" style="background: #2a0d13; border-radius: 16px; box-shadow: 0 2px 8px #0002; padding: 1.5em; width: 260px; display: flex; flex-direction: column; align-items: center; margin-bottom: 2em; border: 2px solid #b3005e;">
+              <img src="http://localhost:3000${menina.foto}" alt="${menina.nome}" style="width: 180px; height: 240px; object-fit: cover; border-radius: 12px; margin-bottom: 1em;">
+              <h3 style="color: #ff4fa3; margin-bottom: 0.5em;">${menina.nome.charAt(0).toUpperCase() + menina.nome.slice(1)}</h3>
+              <p style="color: #fff; text-align: center;">${menina.descricao}</p>
+            </div>
+          `;
+        });
+      } catch (error) {
+        console.error('Erro ao carregar meninas:', error);
+        const container = document.getElementById('cards-meninas');
+        container.innerHTML = '<p style="color: #fff; text-align: center;">Carregando terapeutas...</p>';
+      }
+    }
+    
+    // Carregar meninas quando a página carregar
+    document.addEventListener('DOMContentLoaded', carregarMeninas);
+    </script>
 </body>
 </html> 

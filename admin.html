@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Admin - Anavrin</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .admin-container { max-width: 900px; margin: 40px auto; background: #fff; padding: 2em; border-radius: 12px; box-shadow: 0 4px 24px #0002; }
+    .logout-btn { float: right; margin-bottom: 1em; background: #a00; color: #fff; border: none; border-radius: 4px; padding: 0.5em 1em; font-weight: bold; cursor: pointer; }
+    .banner-section { margin-bottom: 2em; text-align: center; }
+    #banner-img { max-width: 100%; max-height: 200px; border-radius: 8px; box-shadow: 0 2px 8px #0001; margin-bottom: 1em; }
+    #banner-upload { margin-bottom: 0.5em; }
+    .banner-section h3 { margin-bottom: 0.5em; }
+    .meninas-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5em; }
+    .menina-card { background: #f8f8fa; border-radius: 10px; box-shadow: 0 2px 8px #0001; padding: 1.2em; display: flex; flex-direction: column; align-items: center; min-height: 340px; justify-content: space-between; transition: box-shadow 0.2s; }
+    .menina-card:hover { box-shadow: 0 4px 16px #0002; }
+    .menina-card img { width: 90px; height: 90px; object-fit: cover; border-radius: 8px; border: 1px solid #ccc; margin-bottom: 0.7em; }
+    .menina-fields { width: 100%; display: flex; flex-direction: column; gap: 0.4em; margin-bottom: 0.7em; align-items: center; }
+    .menina-fields input[type="text"] { padding: 0.4em; border-radius: 4px; border: 1px solid #bbb; font-size: 1em; width: 90%; text-align: center; }
+    .menina-fields label { font-size: 0.95em; color: #333; margin-bottom: 0.1em; align-self: flex-start; margin-left: 5%; }
+    .menina-actions { width: 100%; display: flex; flex-direction: column; gap: 0.5em; align-items: center; margin-top: auto; }
+    .menina-actions input[type="file"] { font-size: 0.95em; width: 90%; }
+    .menina-actions button { width: 90%; background: #222; color: #fff; border: none; border-radius: 4px; padding: 0.4em 1em; font-weight: bold; cursor: pointer; transition: background 0.2s; }
+    .menina-actions button:hover { background: #a00; }
+    .success { color: green; font-size: 0.95em; }
+    .error { color: red; font-size: 0.95em; }
+    @media (max-width: 600px) {
+      .admin-container { padding: 0.5em; }
+      .meninas-grid { grid-template-columns: 1fr; }
+      .menina-card { min-height: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-container" id="admin-app">
+    <div id="login-section">
+      <h2>Login do Admin</h2>
+      <form class="login-form" id="login-form">
+        <input type="password" id="senha" placeholder="Senha do admin" required />
+        <button type="submit">Entrar</button>
+        <div id="login-msg"></div>
+      </form>
+    </div>
+    <div id="painel-section" style="display:none;">
+      <button class="logout-btn" onclick="logout()">Sair</button>
+      <h2 style="margin-bottom:1.5em;">Painel Administrativo</h2>
+      <div class="banner-section">
+        <h3>Banner do site</h3>
+        <img id="banner-img" src="http://localhost:3000/assets/banner-moema.jpg?t=" alt="Banner">
+        <br>
+        <input type="file" id="banner-upload" accept="image/*">
+        <br>
+        <span id="banner-msg"></span>
+      </div>
+      <h3 style="margin-bottom:1em;">Gerenciar terapeutas</h3>
+      <div id="meninas-list" class="meninas-grid"></div>
+    </div>
+  </div>
+  <script>
+    const API_URL = 'http://localhost:3000/api';
+    let isLogged = false;
+
+    document.getElementById('login-form').onsubmit = async function(e) {
+      e.preventDefault();
+      const senha = document.getElementById('senha').value;
+      const res = await fetch(`${API_URL}/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ senha })
+      });
+      const data = await res.json();
+      const msg = document.getElementById('login-msg');
+      if (data.success) {
+        isLogged = true;
+        document.getElementById('login-section').style.display = 'none';
+        document.getElementById('painel-section').style.display = 'block';
+        loadMeninas();
+      } else {
+        msg.textContent = 'Senha incorreta!';
+        msg.className = 'error';
+      }
+    };
+
+    function logout() {
+      isLogged = false;
+      document.getElementById('login-section').style.display = 'block';
+      document.getElementById('painel-section').style.display = 'none';
+      document.getElementById('senha').value = '';
+      document.getElementById('login-msg').textContent = '';
+    }
+
+    async function loadMeninas() {
+      const res = await fetch(`${API_URL}/meninas`);
+      const meninas = await res.json();
+      const list = document.getElementById('meninas-list');
+      list.innerHTML = '';
+      meninas.forEach(menina => {
+        const div = document.createElement('div');
+        div.className = 'menina-card';
+        div.innerHTML = `
+          <img src="http://localhost:3000${menina.foto}?t=${Date.now()}" alt="${menina.nome}">
+          <div class="menina-fields">
+            <label for="nome-${menina.id}">Nome</label>
+            <input type="text" value="${menina.nome}" id="nome-${menina.id}">
+            <label for="desc-${menina.id}">Descrição</label>
+            <input type="text" value="${menina.descricao || ''}" id="desc-${menina.id}">
+          </div>
+          <div class="menina-actions">
+            <input type="file" accept="image/*" onchange="uploadFoto(event, '${menina.id}')">
+            <button onclick="salvarEdicao('${menina.id}')">Salvar</button>
+          </div>
+          <span id="msg-${menina.id}"></span>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    window.uploadFoto = async function(event, id) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const formData = new FormData();
+      formData.append('foto', file);
+      const msgSpan = document.getElementById(`msg-${id}`);
+      msgSpan.textContent = 'Enviando...';
+      msgSpan.className = '';
+      try {
+        const res = await fetch(`${API_URL}/meninas/${id}/foto`, {
+          method: 'POST',
+          body: formData
+        });
+        if (res.ok) {
+          msgSpan.textContent = 'Foto atualizada!';
+          msgSpan.className = 'success';
+          loadMeninas();
+        } else {
+          const data = await res.json();
+          msgSpan.textContent = data.error || 'Erro ao enviar foto';
+          msgSpan.className = 'error';
+        }
+      } catch (err) {
+        msgSpan.textContent = 'Erro ao enviar foto';
+        msgSpan.className = 'error';
+      }
+    };
+
+    window.salvarEdicao = async function(id) {
+      const novoNome = document.getElementById(`nome-${id}`).value;
+      const descricao = document.getElementById(`desc-${id}`).value;
+      const msgSpan = document.getElementById(`msg-${id}`);
+      msgSpan.textContent = 'Salvando...';
+      msgSpan.className = '';
+      try {
+        const res = await fetch(`${API_URL}/meninas/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ novoNome, descricao })
+        });
+        if (res.ok) {
+          msgSpan.textContent = 'Salvo!';
+          msgSpan.className = 'success';
+          loadMeninas();
+        } else {
+          const data = await res.json();
+          msgSpan.textContent = data.error || 'Erro ao salvar';
+          msgSpan.className = 'error';
+        }
+      } catch (err) {
+        msgSpan.textContent = 'Erro ao salvar';
+        msgSpan.className = 'error';
+      }
+    };
+
+    document.getElementById('banner-upload').onchange = async function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const formData = new FormData();
+      formData.append('banner', file);
+      const msg = document.getElementById('banner-msg');
+      msg.textContent = 'Enviando...';
+      msg.className = '';
+      try {
+        const res = await fetch(`${API_URL}/banner`, {
+          method: 'POST',
+          body: formData
+        });
+        if (res.ok) {
+          msg.textContent = 'Banner atualizado!';
+          msg.className = 'success';
+          document.getElementById('banner-img').src = `http://localhost:3000/assets/banner-moema.jpg?t=${Date.now()}`;
+        } else {
+          msg.textContent = 'Erro ao enviar banner';
+          msg.className = 'error';
+        }
+      } catch (err) {
+        msg.textContent = 'Erro ao enviar banner';
+        msg.className = 'error';
+      }
+    };
+  </script>
+</body>
+</html> 
