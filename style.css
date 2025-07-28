@@ -58,6 +58,23 @@ img { max-width: 100%; display: block; }
   color: #ff3366;
   border-bottom: 2px solid #ff3366;
 }
+.admin-btn {
+  background: linear-gradient(45deg, #b3005e, #ff4fa3);
+  color: #fff !important;
+  padding: 8px 16px !important;
+  border-radius: 20px;
+  border: none !important;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(179, 0, 94, 0.3);
+}
+.admin-btn:hover {
+  background: linear-gradient(45deg, #ff4fa3, #b3005e);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(179, 0, 94, 0.4);
+  color: #fff !important;
+  border-bottom: none !important;
+}
 /* Hamburger */
 .hamburger {
   display: none;
@@ -343,6 +360,13 @@ img { max-width: 100%; display: block; }
   }
   .menu.open { display: flex; }
   .hamburger { display: flex; }
+  .admin-btn {
+    margin: 8px 12px;
+    text-align: center;
+    display: block;
+    font-size: 0.9rem;
+    padding: 6px 12px !important;
+  }
   .whatsapp-float { right: 12px; bottom: 12px; width: 48px; height: 48px; }
   .whatsapp-float img { width: 26px; height: 26px; }
 }
